@@ -1,0 +1,104 @@
+#!/bin/bash
+
+usage() {
+  echo "$(basename $0) [--out <outFile>] [--project <project>]"
+  exit 0
+}
+
+createPackageConfig() {
+  cat <<-'EOF' > package.json
+{
+  "name": "threatspec",
+  "version": "0.1.0",
+  "description": "code-driven threatmodelling",
+  "author": "Fraser Scott <fraser.scott@gmail.com>",
+  "contributors": [{
+    "name": "Foo Bar",
+    "email": "foo.bar@example.com"
+  }],
+  "bin": {
+    "module-name": "./bin/threatspec-js"
+  },
+  "main": "lib/threatspec.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/nodejitsu/browsenpm.org"
+  },
+  "bugs": {
+    "url": "https://github.com/nodejitsu/browsenpm.org/issues"
+  },
+  "keywords": [
+    "nodejitsu",
+    "example",
+    "browsenpm"
+  ],
+  "dependencies": {
+    "esprima": "*",
+    "tv4": "*",
+    "jsdoc": "*",
+    "command-line-args": "*"
+  },
+  "license": "MIT"
+}
+EOF
+}
+
+createJsdocConfig() {
+  cat <<-'EOF' > conf.json
+{
+    "tags": {
+        "allowUnknownTags": true,
+        "dictionaries": ["jsdoc","closure"]
+    },
+    "source": {
+        "includePattern": ".+\\.js(doc)?$",
+        "excludePattern": "(^|\\/|\\\\)_"
+    },
+    "plugins": ["plugins/threatspec"],
+    "templates": {
+        "cleverLinks": false,
+        "monospaceLinks": false
+    }
+}
+EOF
+}
+
+npmInstall() {
+  [ -d node_modules ] || npm install
+}
+
+copyThreatSpecPlugin() {
+  cp lib/threatspec.js node_modules/jsdoc/plugins/
+}
+
+cleanup() {
+  rm ./conf.json
+  rm ./package.json
+  rm -rf ./tmp
+}
+
+[ -e $(which npm) ] || (echo "npm must be available"; exit 1)
+
+outFile="threatspec.json"
+project="default"
+
+while [ $# -gt 0 ]; do
+  case "$1" in
+    "--out")      shift; outFile="$1"; shift;;
+    "--project")  shift; project="$1"; shift;;
+    "--help")     usage;;
+    *) break;;
+  esac
+done
+
+createPackageConfig
+npmInstall
+createJsdocConfig
+copyThreatSpecPlugin
+
+./node_modules/.bin/jsdoc -c conf.json -d tmp -q "project=${project}&out=${outFile}" $@
+
+
+cleanup
+
+exit 0

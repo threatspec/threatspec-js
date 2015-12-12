@@ -1,0 +1,107 @@
+{
+  "specification": {
+    "name": "ThreatSpec",
+    "version": "0.1.0"
+  },
+  "document": {
+    "created": 1449950796,
+    "updated": 1449950796
+  },
+  "boundaries": {
+    "@webapp": {
+      "name": "WebApp"
+    },
+    "@user": {
+      "name": "User"
+    }
+  },
+  "components": {
+    "@filesystem": {
+      "name": "FileSystem"
+    },
+    "@app": {
+      "name": "App"
+    },
+    "@browser": {
+      "name": "Browser"
+    }
+  },
+  "threats": {
+    "@cwe_319_cleartext_transmission": {
+      "name": "The software transmits sensitive or security-critical data in cleartext in a communication channel that can be sniffed by unauthorized actors"
+    },
+    "@unauthorised_access": {
+      "name": "unauthorised access"
+    },
+    "@xss_injection": {
+      "name": "XSS injection"
+    },
+    "@arbitrary_file_writes": {
+      "name": "arbitrary file writes"
+    }
+  },
+  "projects": {
+    "Simple": {
+      "mitigations": {
+        "@strict_file_permissions": [
+          {
+            "boundary": "@webapp",
+            "component": "@filesystem",
+            "threat": "@unauthorised_access",
+            "mitigation": "strict file permissions",
+            "source": {
+              "file": "test.js",
+              "line": 15,
+              "function": "Story#Book"
+            }
+          }
+        ]
+      },
+      "exposures": {
+        "@insufficient_input_validation": [
+          {
+            "boundary": "@webapp",
+            "component": "@app",
+            "threat": "@xss_injection",
+            "exposure": "insufficient input validation",
+            "source": {
+              "file": "test.js",
+              "line": 15,
+              "function": "Story#Book"
+            }
+          }
+        ]
+      },
+      "transfers": {
+        "@nonsensitive_information": [
+          {
+            "boundary": "@user",
+            "component": "@browser",
+            "threat": "@cwe_319_cleartext_transmission",
+            "transfer": "non-sensitive information",
+            "source": {
+              "file": "test.js",
+              "line": 15,
+              "function": "Story#Book"
+            }
+          }
+        ]
+      },
+      "acceptances": {
+        "@filename_restrictions": [
+          {
+            "boundary": "@webapp",
+            "component": "@filesystem",
+            "threat": "@arbitrary_file_writes",
+            "acceptance": "filename restrictions",
+            "source": {
+              "file": "test.js",
+              "line": 15,
+              "function": "Story#Book"
+            }
+          }
+        ]
+      }
+    }
+  }
+}
