@@ -1,0 +1,37 @@
+{
+  "name": "threatspec",
+  "version": "0.1.0",
+  "description": "code-driven threat modelling",
+  "author": "Fraser Scott <fraser.scott@gmail.com>",
+  "contributors": [{
+    "name": "Foo Bar",
+    "email": "foo.bar@example.com"
+  }],
+  "lib": [
+    "lib"
+  ],
+  "bin": {
+    "threatspec-js": "./bin/cli.js"
+  },
+  "directories":{"bin":"./bin","doc":"./doc","lib":"./lib"},
+  "main": "lib/threatspec.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/nodejitsu/browsenpm.org"
+  },
+  "bugs": {
+    "url": "https://github.com/nodejitsu/browsenpm.org/issues"
+  },
+  "keywords": [
+    "nodejitsu",
+    "example",
+    "browsenpm"
+  ],
+  "dependencies": {
+    "esprima": "*",
+    "tv4": "*",
+    "command-line-args": "*",
+    "mustache": "*"
+  },
+  "license": "MIT"
+}

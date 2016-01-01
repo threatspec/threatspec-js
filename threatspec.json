@@ -1,0 +1,107 @@
+{
+  "specification": {
+    "name": "ThreatSpec",
+    "version": "0.1.0"
+  },
+  "document": {
+    "created": 1451596079,
+    "updated": 1451596079
+  },
+  "boundaries": {
+    "@webapp": {
+      "name": "WebApp"
+    },
+    "@user": {
+      "name": "User"
+    }
+  },
+  "components": {
+    "@filesystem": {
+      "name": "FileSystem"
+    },
+    "@app": {
+      "name": "App"
+    },
+    "@browser": {
+      "name": "Browser"
+    }
+  },
+  "threats": {
+    "@unauthorised_access": {
+      "name": "unauthorised access"
+    },
+    "@xss_injection": {
+      "name": "XSS injection"
+    },
+    "@cwe_319_cleartext_transmission": {
+      "name": "@cwe_319_cleartext_transmission"
+    },
+    "@arbitrary_file_writes": {
+      "name": "arbitrary file writes"
+    }
+  },
+  "projects": {
+    "default": {
+      "mitigations": {
+        "@strict_file_permissions": [
+          {
+            "boundary": "@webapp",
+            "component": "@filesystem",
+            "threat": "@unauthorised_access",
+            "mitigation": "strict file permissions",
+            "source": {
+              "file": "meh.txt",
+              "line": 14,
+              "function": "Book"
+            }
+          }
+        ]
+      },
+      "exposures": {
+        "@insufficient_input_validation": [
+          {
+            "boundary": "@webapp",
+            "component": "@app",
+            "threat": "@xss_injection",
+            "exposure": "insufficient input validation",
+            "source": {
+              "file": "meh.txt",
+              "line": 14,
+              "function": "Book"
+            }
+          }
+        ]
+      },
+      "transfers": {
+        "@nonsensitive_information": [
+          {
+            "boundary": "@user",
+            "component": "@browser",
+            "threat": "@cwe_319_cleartext_transmission",
+            "transfer": "non-sensitive information",
+            "source": {
+              "file": "meh.txt",
+              "line": 14,
+              "function": "Book"
+            }
+          }
+        ]
+      },
+      "acceptances": {
+        "@filename_restrictions": [
+          {
+            "boundary": "@webapp",
+            "component": "@filesystem",
+            "threat": "@arbitrary_file_writes",
+            "acceptance": "filename restrictions",
+            "source": {
+              "file": "meh.txt",
+              "line": 14,
+              "function": "Book"
+            }
+          }
+        ]
+      }
+    }
+  }
+}
