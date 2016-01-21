@@ -4,12 +4,13 @@
     "version": "0.1.0"
   },
   "document": {
-    "created": 1451596079,
-    "updated": 1451596079
+    "created": 1453400297,
+    "updated": 1453400297
   },
   "boundaries": {
     "@webapp": {
-      "name": "WebApp"
+      "name": "WebApp",
+      "description": "Customer facing web application"
     },
     "@user": {
       "name": "User"
@@ -27,14 +28,15 @@
     }
   },
   "threats": {
+    "@cwe_319_cleartext_transmission": {
+      "name": "cleartext ",
+      "description": "The software transmits sensitive or security-critical data in cleartext in a communication channel that can be sniffed by unauthorized actors"
+    },
     "@unauthorised_access": {
       "name": "unauthorised access"
     },
     "@xss_injection": {
       "name": "XSS injection"
-    },
-    "@cwe_319_cleartext_transmission": {
-      "name": "@cwe_319_cleartext_transmission"
     },
     "@arbitrary_file_writes": {
       "name": "arbitrary file writes"
@@ -49,9 +51,12 @@
             "component": "@filesystem",
             "threat": "@unauthorised_access",
             "mitigation": "strict file permissions",
+            "references": [
+              "#123"
+            ],
             "source": {
               "file": "meh.txt",
-              "line": 14,
+              "line": 41,
               "function": "Book"
             }
           }
@@ -64,9 +69,12 @@
             "component": "@app",
             "threat": "@xss_injection",
             "exposure": "insufficient input validation",
+            "references": [
+              "#567"
+            ],
             "source": {
               "file": "meh.txt",
-              "line": 14,
+              "line": 41,
               "function": "Book"
             }
           }
@@ -79,9 +87,10 @@
             "component": "@browser",
             "threat": "@cwe_319_cleartext_transmission",
             "transfer": "non-sensitive information",
+            "references": [],
             "source": {
               "file": "meh.txt",
-              "line": 14,
+              "line": 41,
               "function": "Book"
             }
           }
@@ -94,9 +103,12 @@
             "component": "@filesystem",
             "threat": "@arbitrary_file_writes",
             "acceptance": "filename restrictions",
+            "references": [
+              "#666"
+            ],
             "source": {
               "file": "meh.txt",
-              "line": 14,
+              "line": 41,
               "function": "Book"
             }
           }
